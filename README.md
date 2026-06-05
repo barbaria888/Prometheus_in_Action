@@ -1,4 +1,12 @@
- # 📊 Prometheus In Action: Multi-Node & Flask Application Monitoring
+<p align="center">
+  <img 
+    src="https://raw.githubusercontent.com/fjudith/cloud-native-isometric-icons/refs/heads/master/svg/apps/monitoring/prometheus.svg"
+    alt="Prometheus"
+    width="120"
+  />
+</p>
+
+ # Prometheus In Action: Multi-Node & Flask Application Monitoring
  
  A complete, production-ready demonstration package illustrating how to monitor a distributed environment and instrument a custom Python Flask application with Prometheus metrics using Docker containers.
 
