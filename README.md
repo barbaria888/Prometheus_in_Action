@@ -52,16 +52,16 @@ This project deploys a virtual environment comprising 3 Node Exporters, a custom
 Run the following commands to create the network isolation layer and launch three Node Exporter containers to simulate distinct infrastructure nodes:
 
 ```bash
-# Create the isolated bridge network
+
 docker network create monitor
 
-# Start Node Exporter 1 (Mapped to port 9101)
+# start node exporter 1 (Mapped to  9101)
 docker run -d --name node-exporter1 -p 9101:9100 --network monitor bitnami/node-exporter:latest
 
-# Start Node Exporter 2 (Mapped to port 9102)
+# start node exporter 2 (Mapped to  9102)
 docker run -d --name node-exporter2 -p 9102:9100 --network monitor bitnami/node-exporter:latest
 
-# Start Node Exporter 3 (Mapped to port 9103)
+# start node exporter 3 (Mapped to  9103)
 docker run -d --name node-exporter3 -p 9103:9100 --network monitor bitnami/node-exporter:latest
 ```
 
@@ -101,7 +101,7 @@ docker run -d --name prometheus -p 9090:9090 --network monitor \
 ### Target Status Check
 Navigate to the Prometheus Web UI at `http://localhost:9090/targets` to verify all endpoints are correctly registered and scraped:
 
-![Prometheus Targets UI showing nodes up](./images/targets-up.png)
+![Prometheus Targets UI showing nodes up](./images/pythonserver-container-added-to scrape.png)
 
 ### Simulated Outage Response
 To test alerting and observability capability, shut down the first node exporter:
@@ -110,7 +110,7 @@ docker stop node-exporter1
 ```
 Observe the state transition within the Prometheus Target dashboard after the scraping interval (15s):
 
-![Node Exporter 1 Down](./images/node1-down.png)
+![Node Exporter 1 Down](./images/node-exporter1-goes-down.png)
 
 ### Metric Scraping & Traffic Verification
 Generate sample traffic on the instrumented Flask microservice:
@@ -122,17 +122,9 @@ curl localhost:8081/contact
 
 Run Prometheus queries (e.g., `flask_http_request_total` or `flask_http_request_duration_seconds_bucket`) in the Graph page to monitor traffic patterns:
 
-![Prometheus Graph showing HTTP requests](./images/app-metrics.png)
+![Prometheus Graph showing HTTP requests](./images/http-request-spike-on-pythonserver.png)
 
----
 
-## 📷 Screenshot Asset Requirements
-
-To complete the visual walkthrough of this portfolio piece, capture and save the following screenshots from your active lab environment to the `./images/` directory:
-
-*   **`targets-up.png`**: The Prometheus Targets dashboard (`http://localhost:9090/targets`) with all configured endpoints (`node-exporter1`, `node-exporter2`, `node-exporter3`, and `pythonserver`) in the green **UP** status.
-*   **`node1-down.png`**: The Targets dashboard showing `node-exporter1:9100` in the red **DOWN** status after performing the simulated outage task.
-*   **`app-metrics.png`**: The Prometheus Graph console tracking metrics such as `flask_http_request_total` or `flask_http_request_duration_seconds_bucket` to show active requests and latency distribution.
 
 ---
 
